@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model BankAccount
+
+@if (ViewBag.AccountData != null && ViewBag.Reciever == null)
+{
+    <div>
+        <p>Account name: @ViewBag.AccountData.AccountName</p>
+        <p>Password: @ViewBag.AccountData.AccountPass</p>
+        <p>Balance: @ViewBag.AccountData.Balance</p>
+    </div>
+
+    <form method="post" action="/Home/SafeBalanceChange" asp-antiforgery="true">
+        <input type="number" name="changeAmmount" placeholder="Change Ammount" />
+        <input type="text" name="recieverName" placeholder="Reciever Name" />
+        <button class="btn btn-primary" type="submit">Send</button>
+    </form>
+}
+else if (ViewBag.Accountdata != null)
+{
+    <div>
+        <p>@ViewBag.AccountData.AccountName sent @ViewBag.RecieveAmmount to @ViewBag.Reciever</p>
+        <p>New balance: @ViewBag.AccountData.Balance</p>
+    </div>
+
+    <form method="post" action="/Home/SafeBalanceChange" asp-antiforgery="true">
+        <input type="number" name="changeAmmount" placeholder="Change Ammount" />
+        <input type="text" name="recieverName" placeholder="Reciever Name" />
+        <button class="btn btn-primary" type="submit">Send</button>
+    </form>
+}
+else
+{
+    <form method="post" action="/Home/Login">
+        <input type="text" name="accountName" placeholder="Enter your account name" />
+        <input type="text" name="accountPass" placeholder="Enter your account password" />
+        <button class="btn btn-primary" type="submit">Login</button>
+    </form>
+}
